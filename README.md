@@ -10,7 +10,7 @@ An end-to-end data warehouse project built on the **Olist Brazilian E-Commerce**
 
 This project follows the **Medallion Architecture** pattern with three distinct layers:
 
-![Data Architecture](docs/data_architecture.drawio)
+![Data Architecture Diagram](docs/data_architecture.png)
 
 | Layer | Description | Object Type | Load Strategy |
 |---|---|---|---|
