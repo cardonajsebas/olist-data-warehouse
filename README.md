@@ -18,6 +18,14 @@ This project follows the **Medallion Architecture** pattern with three distinct 
 | ⚪ **Silver** | Cleaned, standardized and normalized data | Tables | Full load · Truncate & Insert |
 | 🟡 **Gold** | Business-ready analytical models | Views | No load · Derived from Silver |
 
+## 🗃️ Data Model
+
+The source data consists of 9 interrelated tables centered around `olist_orders` as the core fact entity. Relationships are documented in [`docs/erd.drawio`](docs/erd.drawio).
+
+The Gold layer will implement a **Star Schema** with:
+- **Fact tables** — `fact_orders`, `fact_order_items`
+- **Dimension tables** — `dim_customers`, `dim_products`, `dim_sellers`, `dim_date`, `dim_geolocation`
+
 ---
 
 ## 📖 Project Overview
@@ -50,7 +58,7 @@ olist-data-warehouse/
 ├── docs/                         # Architecture diagrams and documentation
 │   ├── data_architecture.drawio  # High-level architecture diagram
 │   ├── data_flow.drawio          # ETL data flow diagram
-│   ├── data_models.drawio        # Star schema / ERD diagram
+│   ├── erd.drawio        # Star schema / ERD diagram
 │   ├── data_catalog.md           # Table and column definitions with metadata
 │   └── naming_conventions.md     # Naming standards for tables, columns and scripts
 │
