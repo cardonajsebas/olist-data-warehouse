@@ -82,15 +82,30 @@ olist-data-warehouse/
 | Tool | Purpose |
 |---|---|
 | **PostgreSQL** | Core database engine |
+| **DBeaver** | Database GUI |
 | **Draw.io** | Architecture and data model diagrams |
 | **GitHub** | Version control and project planning |
 | **GitHub Projects** | Agile project management (Scrum-like board) |
 
 ---
 
-## 🚀 How to Run
+## ⚙️ Prerequisites
 
-> Prerequisites: PostgreSQL installed and running locally. See setup instructions below.
+Before running this project locally, make sure you have the following installed:
+
+**PostgreSQL**
+The core database engine for this project. Any recent version (14+) works.
+→ [postgresql.org/download](https://www.postgresql.org/download/)
+
+**A SQL Client**
+You'll need a GUI or CLI tool to connect to PostgreSQL, run scripts and explore the data.
+This project was built using **DBeaver Community Edition**, but any SQL client that supports
+PostgreSQL will work — pgAdmin, DataGrip, or just the `psql` CLI are all valid alternatives.
+→ [dbeaver.io](https://dbeaver.io/download/)
+
+> Both tools are free and available on Windows, macOS and Linux.
+
+## 🚀 How to Run
 
 ### 1. Clone the repository
 
