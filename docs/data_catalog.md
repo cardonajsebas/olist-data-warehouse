@@ -16,15 +16,15 @@ This catalog documents all source tables from the **Olist Brazilian E-Commerce**
 
 | # | Table Name | Description | Row count |
 |---|---|---|---|
-| 1 | [olist_orders](#1-olist_orders) | Core order records |  |
-| 2 | [olist_order_items](#2-olist_order_items) | Line items per order |  |
-| 3 | [olist_order_payments](#3-olist_order_payments) | Payment details per order |  |
-| 4 | [olist_order_reviews](#4-olist_order_reviews) | Customer reviews per order |  |
-| 5 | [olist_customers](#5-olist_customers) | Customer location and identifiers |  |
-| 6 | [olist_products](#6-olist_products) | Product attributes and categories |  |
-| 7 | [olist_sellers](#7-olist_sellers) | Seller location and identifiers |  |
-| 8 | [olist_geolocation](#8-olist_geolocation) | ZIP code coordinates |  |
-| 9 | [product_category_name_translation](#9-product_category_name_translation) | Category name translations |  |
+| 1 | [olist_orders](#1-olist_orders) | Core order records | 99,441 |
+| 2 | [olist_order_items](#2-olist_order_items) | Line items per order | 112,650 |
+| 3 | [olist_order_payments](#3-olist_order_payments) | Payment details per order | 103,886 |
+| 4 | [olist_order_reviews](#4-olist_order_reviews) | Customer reviews per order | 99,224 |
+| 5 | [olist_customers](#5-olist_customers) | Customer location and identifiers | 99,441 |
+| 6 | [olist_products](#6-olist_products) | Product attributes and categories | 32,951 |
+| 7 | [olist_sellers](#7-olist_sellers) | Seller location and identifiers | 3,095 |
+| 8 | [olist_geolocation](#8-olist_geolocation) | ZIP code coordinates | 1,000,163 |
+| 9 | [product_category_name_translation](#9-product_category_name_translation) | Category name translations | 71 |
 
 ---
 
@@ -255,6 +255,7 @@ This catalog documents all source tables from the **Olist Brazilian E-Commerce**
 | `olist_geolocation` | Coordinates outside Brazil | Low | Filter outliers in Silver layer |
 | `olist_orders` | Nulls in delivery timestamp columns | Low | Expected -document and preserve |
 | `olist_order_reviews` | High null rate on comment fields | Low | Expected -document and preserve |
+| `olist_order_reviews` | Comment fields contain commas and special characters causing CSV parsing issues | Medium | Use \copy with explicit quote handling for ingestion |
 | `product_category_name_translation` | Unmatched categories in products table | Low | Left join with null handling in Silver |
 
 ---

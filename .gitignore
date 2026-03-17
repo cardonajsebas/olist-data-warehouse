@@ -1,0 +1,14 @@
+# --- Secrets & Config ---
+.env
+.env.local
+.env.*.local
+*.pem
+*.key
+
+# --- Linux / System Clutter ---
+.DS_Store
+Thumbs.db
+*~
+*.swp
+*.swo
+
