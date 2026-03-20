@@ -18,6 +18,49 @@ This project follows the **Medallion Architecture** pattern with three distinct 
 | ⚪ **Silver** | Cleaned, standardized and normalized data | Tables | Full load · Truncate & Insert |
 | 🟡 **Gold** | Business-ready analytical models | Views | No load · Derived from Silver |
 
+## 🔄 Layer Details
+
+### 🟤 Bronze — Raw Ingestion
+Loads all 9 Olist CSV source files into PostgreSQL as-is with no transformations applied. All columns are stored as `VARCHAR` to preserve raw data integrity.
+Any type casting or cleaning that happens at ingestion could silently corrupt or reject records, Bronze is the safety net.
+
+- **Load strategy:** Full load - Truncate & Insert
+- **Object type:** Tables
+- **Scripts:** `scripts/bronze/ddl_bronze.sql`, `scripts/bronze/load_bronze.sql`
+
+> `crm_order_reviews` required a Python-based ingestion script (`import_reviews.py`) due to special characters and line breaks in customer comment fields causing CSV parsing failures.
+
+---
+
+### ⚪ Silver — Cleaning & Standardization
+Transforms Bronze data into clean, typed and consistent tables ready for dimensional modeling. No joins or business logic are applied at this stage, Silver tables maintain a 1:1 relationship with their Bronze counterparts.
+
+Key transformations applied:
+
+| Area | Transformation |
+|---|---|
+| Data types | All columns cast to proper types (TIMESTAMP, DECIMAL, INTEGER) |
+| String standardization | City names lowercased and trimmed, state codes uppercased |
+| ZIP codes | Padded to 5 characters using `LPAD` across customers, sellers and geolocation |
+| Column renames | Typos corrected in `erp_products` (`lenght` → `length`) |
+| Null handling | Empty strings converted to NULL, delivery date nulls preserved intentionally |
+| Deduplication | `erp_geolocation` reduced from ~1M to ~19k rows (one row per ZIP prefix using `AVG` lat/lng) |
+| Outlier filtering | Geolocation coordinates outside Brazil bounds removed |
+| Score validation | `review_score` validated to range 1–5, out-of-range values set to NULL |
+
+- **Load strategy:** Full load — Truncate & Insert
+- **Object type:** Tables
+- **Scripts:** `scripts/silver/ddl_silver.sql`, `scripts/silver/load_silver.sql`, `scripts/silver/validate_silver.sql`
+
+---
+
+### 🟡 Gold — Analytical Layer
+*Coming soon — dimensional modeling (Star Schema) with fact and dimension tables optimized for analytical queries and reporting.*
+
+- **Load strategy:** No load — derived from Silver at query time
+- **Object type:** Views
+- **Scripts:** `scripts/gold/`
+
 ## 🗃️ Data Model
 
 The source data consists of 9 interrelated tables centered around `olist_orders` as the core fact entity. Relationships are documented in [`docs/erd.drawio`](docs/erd.drawio).
