@@ -109,7 +109,6 @@ CREATE TABLE bronze.erp_order_payments (
 /* 
 -- -----------------------------------------------------------------------------
 -- Table: bronze.erp_products
--- Source: olist_products_dataset.csv
 -- -----------------------------------------------------------------------------
  */
 DROP TABLE IF EXISTS bronze.erp_products;
